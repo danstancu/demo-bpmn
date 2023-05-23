@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.stancu.bpmn</groupId>
+        <artifactId>demo-bpmn</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>bpmn-ear</artifactId>
+    <packaging>ear</packaging>
+    <name>bpmn-ear</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.stancu.bpmn</groupId>
+            <artifactId>bpmn-ejb</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>net.stancu.bpmn</groupId>
+            <artifactId>bpmn-webapp</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <!--the definition of the EAR (application.xml) -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <!--export the libs to this dir -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <skinnyWars>true</skinnyWars>
+                    <version>8</version>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
+                    <generateApplicationXml>false</generateApplicationXml>
+                    <applicationXml>${project.basedir}/src/main/application/META-INF/application.xml</applicationXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
